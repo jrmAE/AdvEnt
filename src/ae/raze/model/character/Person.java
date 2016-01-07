@@ -4,7 +4,6 @@
  */
 package ae.raze.model.character;
 
-import com.jme3.asset.AssetManager;
 import com.jme3.scene.Geometry;
 
 /**
@@ -22,6 +21,11 @@ public class Person {
 	
 	public Person() {
 		torso = new Body();
+		head = new Head();
+		leftLeg = new Leg();
+		rightLeg = new Leg();
+		leftArm = new Arm();
+		rightArm = new Arm();
 		
 	}
 	
@@ -30,7 +34,9 @@ public class Person {
 	 * @return <code>Geometry</code>
 	 */
 	public Geometry getPerson() {
-		return torso.getGeom();
+		return leftArm.getGeom();
+//		return torso.getGeom();
+//		return head.getGeom();
 	}
 
 }
