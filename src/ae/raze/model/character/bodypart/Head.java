@@ -2,7 +2,7 @@
  * AE Application RAZE
  * Head.java
  */
-package ae.raze.model.character;
+package ae.raze.model.character.bodypart;
 
 import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Geometry;

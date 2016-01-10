@@ -4,10 +4,6 @@
 package ae.raze;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.shape.Box;
 
 import ae.raze.model.character.Person;
 import ae.raze.util.ApplicationManager;

@@ -2,7 +2,7 @@
  * AE Application RAZE
  * BodyPart.java
  */
-package ae.raze.model.character;
+package ae.raze.model.character.bodypart;
 
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
