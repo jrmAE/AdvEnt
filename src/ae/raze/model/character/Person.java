@@ -26,7 +26,11 @@ public class Person {
 	private Leg leftLeg;
 	private Leg rightLeg;
 	
-	public Person() {
+	/**
+	 * Will create a person at the parameterized 3d Vector
+	 * @param centralPoint - <code>Vector3f</code>
+	 */
+	public Person(Vector3f centralPoint) {
 		torso = new Body();
 		head = new Head();
 		leftLeg = new Leg();

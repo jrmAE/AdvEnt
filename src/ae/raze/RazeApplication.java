@@ -4,6 +4,7 @@
 package ae.raze;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.math.Vector3f;
 
 import ae.raze.model.character.Person;
 import ae.raze.util.ApplicationManager;
@@ -20,7 +21,7 @@ public class RazeApplication extends SimpleApplication {
 	public void simpleInitApp() {
 		
 		ApplicationManager.INSTANCE.setAssetManager(assetManager);
-        Person character1 = new Person();
+        Person character1 = new Person(new Vector3f(1,-1,1));
         rootNode.attachChild(character1.getPerson());
 
 	}
