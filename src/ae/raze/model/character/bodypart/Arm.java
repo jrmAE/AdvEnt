@@ -15,9 +15,10 @@ import com.jme3.scene.shape.Cylinder;
 public class Arm extends BodyPart {
 	
 	public Arm() {
-		Cylinder b = new Cylinder(10, 10, 1, 2);
+		Cylinder b = new Cylinder(10, 25, .25f, 2, true);
         geom = new Geometry("Cylinder", b);  // create cube geometry from the shape
         geom.setMaterial(getDefaultMaterial(ColorRGBA.Green));
+        geom.rotate(0, 30, 0);
 	}
 
 }
