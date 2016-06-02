@@ -14,11 +14,11 @@ import com.jme3.scene.shape.Cylinder;
  */
 public class Leg extends BodyPart {
 	
-	public Leg(Float rotationAngle) {
+	public Leg(Float xAngle, Float yAngle, Float zAngle) {
 		Cylinder b = new Cylinder(10, 25, .25f, 4, true);
         geom = new Geometry("Cylinder", b);  // create cube geometry from the shape
         geom.setMaterial(getDefaultMaterial(ColorRGBA.Green));
-        geom.rotate(rotationAngle, 90, 0); //right leg = 90, left leg = 45 - >90, 90, 0
+        geom.rotate(xAngle, yAngle, zAngle); //right leg = 90, left leg = 45 - >90, 90, 0
 	}
 
 }

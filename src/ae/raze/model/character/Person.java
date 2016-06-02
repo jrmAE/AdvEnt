@@ -35,8 +35,8 @@ public class Person {
 		center = centralPoint.clone();
 		torso = new Body();
 		head = new Head();
-		leftLeg = new Leg(45f);
-		rightLeg = new Leg(90f);
+		leftLeg = new Leg(45f, 90f, 0f);
+		rightLeg = new Leg(90f, 45f, 0f);
 		leftArm = new Arm();
 		rightArm = new Arm();
 		
@@ -52,7 +52,7 @@ public class Person {
 		Vector3f headCenter = new Vector3f(center.getX(), center.getY() +1, center.getZ());
 		Vector3f rightArmCenter = new Vector3f(center.getX() -2, center.getY() -.5f, center.getZ());
 		Vector3f leftArmCenter = new Vector3f(center.getX() +2, center.getY() -.5f, center.getZ());
-		Vector3f rightLegCenter = new Vector3f(center.getX() -1, center.getY() - 3, center.getZ());
+		Vector3f rightLegCenter = new Vector3f(center.getX() -1, center.getY() - 3f, center.getZ());
 		Vector3f leftLegCenter = new Vector3f(center.getX() +1, center.getY() - 3, center.getZ());
 		
 		torso.setLocalCenter(torsoCenter);
