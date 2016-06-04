@@ -51,6 +51,12 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.shadow.BasicShadowRenderer;
 
+/**
+ * Have you played SuperSprint on NES? 
+ * The goal is that this game will feel like that
+ * @author meyer
+ *
+ */
 public class RazeApplication extends SimpleApplication implements ActionListener {
 
     private BulletAppState bulletAppState;
@@ -90,12 +96,10 @@ public class RazeApplication extends SimpleApplication implements ActionListener
             bsr.setDirection(new Vector3f(-0.5f, -0.3f, -0.3f).normalizeLocal());
          //   viewPort.addProcessor(bsr);
         }
-        cam.setFrustumFar(150f);
-        flyCam.setMoveSpeed(10);
 
+        setTopDown();
         setupKeys();
         Track.createTrack(rootNode, assetManager, bulletAppState.getPhysicsSpace());
-//        setupFloor();
         buildCar();
 
         DirectionalLight dl = new DirectionalLight();
@@ -107,6 +111,15 @@ public class RazeApplication extends SimpleApplication implements ActionListener
      //   rootNode.addLight(dl);
     }
 
+    private void setTopDown() {
+        Vector3f left = new Vector3f(0,0,0);
+        Vector3f up = new Vector3f(0,0,50);
+        Vector3f direction = new Vector3f(0,0,45);
+        Vector3f height = new Vector3f(0,100, 0);
+        cam.setAxes(left, up, direction);
+        cam.setLocation(height);
+    }
+    
     private PhysicsSpace getPhysicsSpace() {
         return bulletAppState.getPhysicsSpace();
     }
@@ -238,6 +251,6 @@ public class RazeApplication extends SimpleApplication implements ActionListener
 
     @Override
     public void simpleUpdate(float tpf) {
-        cam.lookAt(carNode.getWorldTranslation(), Vector3f.UNIT_Y);
+//        cam.lookAt(carNode.getWorldTranslation(), Vector3f.UNIT_Y);
     }
 }
