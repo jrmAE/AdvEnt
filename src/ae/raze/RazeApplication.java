@@ -90,11 +90,9 @@ public class RazeApplication extends SimpleApplication implements ActionListener
     public void simpleInitApp() {
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
-//        bulletAppState.getPhysicsSpace().enableDebug(assetManager);
         if (settings.getRenderer().startsWith("LWJGL")) {
             BasicShadowRenderer bsr = new BasicShadowRenderer(assetManager, 512);
             bsr.setDirection(new Vector3f(-0.5f, -0.3f, -0.3f).normalizeLocal());
-         //   viewPort.addProcessor(bsr);
         }
 
         setTopDown();
@@ -108,7 +106,6 @@ public class RazeApplication extends SimpleApplication implements ActionListener
 
         dl = new DirectionalLight();
         dl.setDirection(new Vector3f(0.5f, -0.1f, 0.3f).normalizeLocal());
-     //   rootNode.addLight(dl);
     }
 
     private void setTopDown() {
@@ -142,6 +139,11 @@ public class RazeApplication extends SimpleApplication implements ActionListener
         return null;
     }
 
+    /**
+     * TODO
+     * we want to have a total of four cars race, so this needs to be 
+     * built differently
+     */
     private void buildCar() {
         float stiffness = 120.0f;//200=f1 car
         float compValue = 0.2f; //(lower than damp!)
@@ -206,6 +208,11 @@ public class RazeApplication extends SimpleApplication implements ActionListener
         getPhysicsSpace().add(player);
     }
 
+    /**
+     * TODO
+     * make this appear quicker in the camera
+     * @see com.jme3.input.controls.ActionListener#onAction(java.lang.String, boolean, float)
+     */
     public void onAction(String binding, boolean value, float tpf) {
         if (binding.equals("Lefts")) {
             if (value) {
@@ -251,6 +258,6 @@ public class RazeApplication extends SimpleApplication implements ActionListener
 
     @Override
     public void simpleUpdate(float tpf) {
-//        cam.lookAt(carNode.getWorldTranslation(), Vector3f.UNIT_Y);
+    	//TODO should I be doing anything as the car moves?
     }
 }
