@@ -1,5 +1,7 @@
 package ae.raze;
 
+import java.io.File;
+
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.control.RigidBodyControl;
@@ -50,6 +52,7 @@ public class Track {
 		rootNode.attachChild(floorGeometry); 
 		space.add(floorGeometry); 
 
+		
 		// road cones
 		for (int i = 0; i < 12; i++) { 
 			Vector3f v3f = new Vector3f(0, 0, 0);
@@ -64,6 +67,13 @@ public class Track {
 			rootNode.attachChild(domeGeometry); 
 			space.add(domeGeometry); 
 		} 
+		
+		File f = new File("Models/tracks/generic_walls.blend");
+		System.out.println(f.exists());
+		
+//		Spatial wallSpatial = assetManager.loadModel("Models/tracks/generic_walls.blend"); 
+//		Geometry walls = (Geometry)wallSpatial;
+//		space.add(walls);
 	} 
 
 }

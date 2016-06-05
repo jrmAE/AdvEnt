@@ -121,6 +121,14 @@ public class RazeApplication extends SimpleApplication implements ActionListener
         return bulletAppState.getPhysicsSpace();
     }
 
+    
+    /**
+     * Seems to search the .scene file for a spatial with the given name
+     * TODO need to learn more about this
+     * @param spatial
+     * @param name
+     * @return
+     */
     private Geometry findGeom(Spatial spatial, String name) {
         if (spatial instanceof Node) {
             Node node = (Node) spatial;
