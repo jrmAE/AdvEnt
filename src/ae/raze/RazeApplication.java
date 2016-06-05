@@ -51,6 +51,8 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.shadow.BasicShadowRenderer;
 
+import ae.raze.util.GeometryBuilder;
+
 /**
  * Have you played SuperSprint on NES? 
  * The goal is that this game will feel like that
@@ -97,7 +99,7 @@ public class RazeApplication extends SimpleApplication implements ActionListener
 
         setTopDown();
         setupKeys();
-        Track.createTrack(rootNode, assetManager, bulletAppState.getPhysicsSpace());
+        World.createWorld(rootNode, assetManager, bulletAppState.getPhysicsSpace());
         buildCar();
 
         DirectionalLight dl = new DirectionalLight();
@@ -123,31 +125,6 @@ public class RazeApplication extends SimpleApplication implements ActionListener
 
     
     /**
-     * Seems to search the .scene file for a spatial with the given name
-     * TODO need to learn more about this
-     * @param spatial
-     * @param name
-     * @return
-     */
-    private Geometry findGeom(Spatial spatial, String name) {
-        if (spatial instanceof Node) {
-            Node node = (Node) spatial;
-            for (int i = 0; i < node.getQuantity(); i++) {
-                Spatial child = node.getChild(i);
-                Geometry result = findGeom(child, name);
-                if (result != null) {
-                    return result;
-                }
-            }
-        } else if (spatial instanceof Geometry) {
-            if (spatial.getName().startsWith(name)) {
-                return (Geometry) spatial;
-            }
-        }
-        return null;
-    }
-
-    /**
      * TODO
      * we want to have a total of four cars race, so this needs to be 
      * built differently
@@ -161,7 +138,7 @@ public class RazeApplication extends SimpleApplication implements ActionListener
         //Load model and get chassis Geometry
         carNode = (Node)assetManager.loadModel("Models/Ferrari/Car.scene");
         carNode.setShadowMode(ShadowMode.Cast);
-        Geometry chassis = findGeom(carNode, "Car");
+        Geometry chassis = GeometryBuilder.findGeom(carNode, "Car");
         BoundingBox box = (BoundingBox) chassis.getModelBound();
 
         //Create a hull collision shape for the chassis
@@ -182,7 +159,7 @@ public class RazeApplication extends SimpleApplication implements ActionListener
         Vector3f wheelDirection = new Vector3f(0, -1, 0);
         Vector3f wheelAxle = new Vector3f(-1, 0, 0);
 
-        Geometry wheel_fr = findGeom(carNode, "WheelFrontRight");
+        Geometry wheel_fr = GeometryBuilder.findGeom(carNode, "WheelFrontRight");
         wheel_fr.center();
         box = (BoundingBox) wheel_fr.getModelBound();
         wheelRadius = box.getYExtent();
@@ -191,19 +168,19 @@ public class RazeApplication extends SimpleApplication implements ActionListener
         player.addWheel(wheel_fr.getParent(), box.getCenter().add(0, -front_wheel_h, 0),
                 wheelDirection, wheelAxle, 0.2f, wheelRadius, true);
 
-        Geometry wheel_fl = findGeom(carNode, "WheelFrontLeft");
+        Geometry wheel_fl = GeometryBuilder.findGeom(carNode, "WheelFrontLeft");
         wheel_fl.center();
         box = (BoundingBox) wheel_fl.getModelBound();
         player.addWheel(wheel_fl.getParent(), box.getCenter().add(0, -front_wheel_h, 0),
                 wheelDirection, wheelAxle, 0.2f, wheelRadius, true);
 
-        Geometry wheel_br = findGeom(carNode, "WheelBackRight");
+        Geometry wheel_br = GeometryBuilder.findGeom(carNode, "WheelBackRight");
         wheel_br.center();
         box = (BoundingBox) wheel_br.getModelBound();
         player.addWheel(wheel_br.getParent(), box.getCenter().add(0, -back_wheel_h, 0),
                 wheelDirection, wheelAxle, 0.2f, wheelRadius, false);
 
-        Geometry wheel_bl = findGeom(carNode, "WheelBackLeft");
+        Geometry wheel_bl = GeometryBuilder.findGeom(carNode, "WheelBackLeft");
         wheel_bl.center();
         box = (BoundingBox) wheel_bl.getModelBound();
         player.addWheel(wheel_bl.getParent(), box.getCenter().add(0, -back_wheel_h, 0),
@@ -214,6 +191,9 @@ public class RazeApplication extends SimpleApplication implements ActionListener
 
         rootNode.attachChild(carNode);
         getPhysicsSpace().add(player);
+        
+		//TODO - working here blender needs a UV map for my ogre export of the walls
+		rootNode.attachChild(Track.createTrack(assetManager));
     }
 
     /**
@@ -244,7 +224,7 @@ public class RazeApplication extends SimpleApplication implements ActionListener
                 accelerationValue += 800;
             }
             player.accelerate(accelerationValue);
-            player.setCollisionShape(CollisionShapeFactory.createDynamicMeshShape(findGeom(carNode, "Car")));
+            player.setCollisionShape(CollisionShapeFactory.createDynamicMeshShape(GeometryBuilder.findGeom(carNode, "Car")));
         } else if (binding.equals("Downs")) {
             if (value) {
                 player.brake(40f);
