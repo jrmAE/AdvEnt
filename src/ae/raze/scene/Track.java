@@ -2,7 +2,7 @@
  * AE Application RAZE
  * Track.java
  */
-package ae.raze;
+package ae.raze.scene;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.control.RigidBodyControl;
@@ -34,10 +34,8 @@ public class Track {
 	 * Eventually this should pick from a list and return the selected one.
 	 */
 	private void createTrack(AssetManager assetManager) {
-		//TODO - working here blender needs a UV map for my ogre export of the walls
 		trackSpatial = assetManager.loadModel(trackScene); 
 		trackNode = (Node)trackSpatial;
-		trackNode.addControl(new RigidBodyControl(0));
 		findGeom(trackSpatial);
 		trackGeo.addControl(new RigidBodyControl(0));
 	}
@@ -82,9 +80,4 @@ public class Track {
 	public String getTrackScene() {
 		return trackScene;
 	}
-	
-	
-	
 }
-
-
