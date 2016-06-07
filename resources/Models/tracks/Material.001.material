@@ -32,7 +32,7 @@ material Material.001
 
             texture_unit 
             {
-                texture generic_walls_textures.png
+                texture generic_walls.png
                 tex_address_mode wrap
                 scale 1.0 1.0
                 colour_op modulate

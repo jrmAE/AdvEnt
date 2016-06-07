@@ -1,7 +1,5 @@
 package ae.raze;
 
-import java.io.File;
-
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.control.RigidBodyControl;
@@ -11,11 +9,8 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
-import com.jme3.scene.shape.Dome;
-
-import ae.raze.util.GeometryBuilder; 
+import com.jme3.scene.shape.Dome; 
 
 /**
  * TODO make this more my own
@@ -71,7 +66,12 @@ public class World {
 			space.add(domeGeometry); 
 		} 
 		
-
+		//TODO - working here blender needs a UV map for my ogre export of the walls
+		Track track = new Track(assetManager, "Models/tracks/generic_walls.scene");
+		rootNode.attachChild(track.getTrackNode());
+		track.getTrackGeo().addControl(new RigidBodyControl(0));
+//		trackGeo.addControl(new RigidBodyControl(0)); 
+		space.add(track.getTrackGeo());
 	} 
 
 }

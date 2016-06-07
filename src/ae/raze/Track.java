@@ -5,27 +5,86 @@
 package ae.raze;
 
 import com.jme3.asset.AssetManager;
+import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
-import ae.raze.util.GeometryBuilder;
-
 /**
+ * Everything you'll need for a track.
+ * 
  * @author meyer
- *
  */
 public class Track {
 	
+	private Node trackNode = null;
+	private Spatial trackSpatial = null;
+	private Geometry trackGeo = null;
+	private String trackScene = null;
+	
+	/**
+	 * @param assetManager
+	 * @param trackScene - String. Such as "Models/tracks/generic_walls.scene"
+	 */
+	public Track(AssetManager assetManager, String trackScene) {
+		this.trackScene = trackScene;
+		createTrack(assetManager);
+	}
 	/**
 	 * Eventually this should pick from a list and return the selected one.
 	 */
-	public static Node createTrack(AssetManager assetManager) {
+	private void createTrack(AssetManager assetManager) {
 		//TODO - working here blender needs a UV map for my ogre export of the walls
-		Spatial wallSpatial = assetManager.loadModel("Models/tracks/generic_walls.scene"); 
-		Node walls = (Node)wallSpatial;
-//		Geometry wallGeo = GeometryBuilder.findGeom(walls, "Walls");
-		return walls;
+		trackSpatial = assetManager.loadModel(trackScene); 
+		trackNode = (Node)trackSpatial;
+		trackNode.addControl(new RigidBodyControl(0));
+		findGeom(trackSpatial);
+		trackGeo.addControl(new RigidBodyControl(0));
 	}
-
+	
+	/**
+	 * From the Track's Node element, get the Geometry
+	 * @param spatial
+	 */
+	private void findGeom(Spatial spatial) {
+	    if (spatial instanceof Node) {
+	        Node node = (Node) spatial;
+	        for (int i = 0; i < node.getQuantity(); i++) {
+	            Spatial child = node.getChild(i);
+	            findGeom(child);
+	        }
+	    } else if (spatial instanceof Geometry) {
+	    	System.out.println("B" + spatial.getName());
+	    	trackGeo = (Geometry)spatial;
+	    }
+	}
+	/**
+	 * @return the trackNode
+	 */
+	public Node getTrackNode() {
+		return trackNode;
+	}
+	/**
+	 * @return the trackSpatial
+	 */
+	public Spatial getTrackSpatial() {
+		return trackSpatial;
+	}
+	/**
+	 * @return the trackGeo
+	 */
+	public Geometry getTrackGeo() {
+		return trackGeo;
+	}
+	/**
+	 * @return the trackScene
+	 */
+	public String getTrackScene() {
+		return trackScene;
+	}
+	
+	
+	
 }
+
+

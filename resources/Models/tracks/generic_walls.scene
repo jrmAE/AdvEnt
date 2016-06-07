@@ -1,14 +1,15 @@
-<scene export_time="1465097661.6472168" exported_by="meyer" formatVersion="1.0.1" previous_export_time="1465097585.5674999" >
+<scene export_time="1465180360.3226676" exported_by="meyer" formatVersion="1.0.1" previous_export_time="1465180311.5854857" >
   <nodes >
-    <node name="Walls" >
-      <position x="-6.984737" y="1.000000" z="-0.000000" />
+    <node name="border" >
+      <position x="-23.815016" y="0.226715" z="-0.553965" />
       <rotation qw="1.000000" qx="0.000000" qy="0.000000" qz="-0.000000" />
-      <scale x="1.000000" y="1.000000" z="1.000000" />
+      <scale x="0.222052" y="0.222052" z="0.222052" />
+      <entity name="border" meshFile="Cube.002.mesh"/>
       <game >
         <sensors />
         <actuators />
       </game>
-      <entity actor="False" anisotropic_friction="False" damping_rot="0.1589999943971634" damping_trans="0.02539999969303608" friction_x="1.0" friction_y="1.0" friction_z="1.0" ghost="False" inertia_tensor="0.4000000059604645" lock_rot_x="False" lock_rot_y="False" lock_rot_z="False" lock_trans_x="False" lock_trans_y="False" lock_trans_z="False" mass="1.0" mass_radius="1.0" meshFile="Cube.mesh" name="Cube" physics_type="STATIC" velocity_max="0.0" velocity_min="0.0" />
+      <entity actor="False" anisotropic_friction="False" damping_rot="0.10000000149011612" damping_trans="0.03999999910593033" friction_x="1.0" friction_y="1.0" friction_z="1.0" ghost="False" inertia_tensor="0.4000000059604645" lock_rot_x="False" lock_rot_y="False" lock_rot_z="False" lock_trans_x="False" lock_trans_y="False" lock_trans_z="False" mass="1.0" mass_radius="1.0" meshFile="Cube.002.mesh" name="Cube.002" physics_type="STATIC" velocity_max="0.0" velocity_min="0.0" />
     </node>
     <node name="Lamp" >
       <position x="4.076245" y="5.903862" z="-1.005454" />
@@ -41,7 +42,7 @@
   </nodes>
   <externals >
     <item type="material" >
-      <file name="/home/meyer/blender_ogre_exports/Material.001.material" />
+      <file name="/home/meyer/blender_ogre_exports/Material.002.material" />
     </item>
   </externals>
   <environment >

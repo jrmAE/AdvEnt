@@ -48,7 +48,6 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
 import com.jme3.shadow.BasicShadowRenderer;
 
 import ae.raze.util.GeometryBuilder;
@@ -192,8 +191,8 @@ public class RazeApplication extends SimpleApplication implements ActionListener
         rootNode.attachChild(carNode);
         getPhysicsSpace().add(player);
         
-		//TODO - working here blender needs a UV map for my ogre export of the walls
-		rootNode.attachChild(Track.createTrack(assetManager));
+//		//TODO - working here blender needs a UV map for my ogre export of the walls
+//		rootNode.attachChild(Track.createTrack(assetManager));
     }
 
     /**
