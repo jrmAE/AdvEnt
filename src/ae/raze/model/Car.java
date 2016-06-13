@@ -24,7 +24,6 @@ import ae.raze.util.GeometryBuilder;
 
 /**
  * @author meyer
- *
  */
 public class Car implements ActionListener {
 	
@@ -73,7 +72,7 @@ public class Car implements ActionListener {
         final float mass = 400;
 
         //Load model and get chassis Geometry
-        carNode = (Node)assetManager.loadModel("Models/Ferrari/Car.scene");
+        carNode = (Node)assetManager.loadModel(carModel);
         carNode.setShadowMode(ShadowMode.Cast);
         Geometry chassis = GeometryBuilder.findGeom(carNode, "Car");
         BoundingBox box = (BoundingBox) chassis.getModelBound();
@@ -148,16 +147,16 @@ public class Car implements ActionListener {
      * make this appear quicker in the camera
      * @see com.jme3.input.controls.ActionListener#onAction(java.lang.String, boolean, float)
      */
-    public void onAction(String binding, boolean value, float tpf) {
+    public void onAction(String binding, boolean keyPressed, float tpf) {
         if (binding.equals("Lefts")) {
-            if (value) {
+            if (keyPressed) {
                 steeringValue += .5f;
             } else {
                 steeringValue += -.5f;
             }
             player.steer(steeringValue);
         } else if (binding.equals("Rights")) {
-            if (value) {
+            if (keyPressed) {
                 steeringValue += -.5f;
             } else {
                 steeringValue += .5f;
@@ -165,7 +164,7 @@ public class Car implements ActionListener {
             player.steer(steeringValue);
         } //note that our fancy car actually goes backwards..
         else if (binding.equals("Ups")) {
-            if (value) {
+            if (keyPressed) {
                 accelerationValue -= 800;
             } else {
                 accelerationValue += 800;
@@ -173,13 +172,21 @@ public class Car implements ActionListener {
             player.accelerate(accelerationValue);
             player.setCollisionShape(CollisionShapeFactory.createDynamicMeshShape(GeometryBuilder.findGeom(carNode, "Car")));
         } else if (binding.equals("Downs")) {
-            if (value) {
-                player.brake(40f);
+            if (keyPressed) {
+                if (Math.abs(player.getCurrentVehicleSpeedKmHour()) < 1.0f) {
+                	//reverse!
+                	player.accelerate(800f);
+                } else {
+                	player.brake(40f);
+                }
+                
             } else {
-                player.brake(0f);
+            	//don't brake and don't increase the speed of reversing
+            	player.accelerate(0f);
+            	player.brake(0f);
             }
         } else if (binding.equals("Reset")) {
-            if (value) {
+            if (keyPressed) {
                 System.out.println("Reset");
                 player.setPhysicsLocation(Vector3f.ZERO);
                 player.setPhysicsRotation(new Matrix3f());
