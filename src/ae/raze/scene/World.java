@@ -15,7 +15,7 @@ import com.jme3.scene.shape.Dome;
 import ae.raze.scene.Track; 
 
 /**
- * TODO make this more my own
+ * The floor of the racing track
  */ 
 public class World { 
 
@@ -40,7 +40,7 @@ public class World {
 //		tex.setWrap(Texture.WrapMode.Repeat); //This should set the texture to repeat.
 //		material.setTexture("ColorMap", tex); // with Unshaded.j3md
 		
-		Box floorBox = new Box(100, 0.25f, 100); 
+		Box floorBox = new Box(85, 0.25f, 110); 
 		Geometry floorGeometry = new Geometry("Floor", floorBox); 
 		floorGeometry.setMaterial(material); 
 		floorGeometry.setLocalTranslation(0, -2, 0); 
@@ -69,9 +69,7 @@ public class World {
 		} 
 		
 		//TODO - working here blender needs a UV map for my ogre export of the walls
-		Track track = new Track(assetManager, "Models/tracks/generic_walls.scene");
-		rootNode.attachChild(track.getTrackNode());
-		space.add(track.getTrackGeo());
+		new Track(assetManager, "Models/tracks/generic_walls.scene",rootNode, space);
 	} 
 
 }

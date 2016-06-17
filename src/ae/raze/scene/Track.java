@@ -5,6 +5,7 @@
 package ae.raze.scene;
 
 import com.jme3.asset.AssetManager;
+import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -23,21 +24,25 @@ public class Track {
 	private String trackScene = null;
 	
 	/**
+	 * TODO clean up the parameters - rootnode and physics space don't belong
 	 * @param assetManager
 	 * @param trackScene - String. Such as "Models/tracks/generic_walls.scene"
 	 */
-	public Track(AssetManager assetManager, String trackScene) {
+	public Track(AssetManager assetManager, String trackScene, Node rootNode, PhysicsSpace space) {
 		this.trackScene = trackScene;
-		createTrack(assetManager);
+		createTrack(assetManager, rootNode, space);
 	}
 	/**
 	 * Eventually this should pick from a list and return the selected one.
 	 */
-	private void createTrack(AssetManager assetManager) {
+	private void createTrack(AssetManager assetManager, Node rootNode, PhysicsSpace space) {
 		trackSpatial = assetManager.loadModel(trackScene); 
 		trackNode = (Node)trackSpatial;
 		findGeom(trackSpatial);
+		trackNode.setLocalTranslation(-85, 0, 0);
 		trackGeo.addControl(new RigidBodyControl(0));
+		rootNode.attachChild(trackGeo); 
+		space.add(trackGeo); 
 	}
 	
 	/**
@@ -52,7 +57,6 @@ public class Track {
 	            findGeom(child);
 	        }
 	    } else if (spatial instanceof Geometry) {
-	    	System.out.println("B" + spatial.getName());
 	    	trackGeo = (Geometry)spatial;
 	    }
 	}
