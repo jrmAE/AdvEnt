@@ -187,7 +187,6 @@ public class Car implements ActionListener {
             }
         } else if (binding.equals("Reset")) {
             if (keyPressed) {
-                System.out.println("Reset");
                 player.setPhysicsLocation(Vector3f.ZERO);
                 player.setPhysicsRotation(new Matrix3f());
                 player.setLinearVelocity(Vector3f.ZERO);
