@@ -32,6 +32,7 @@ public class Track {
 		this.trackScene = trackScene;
 		createTrack(assetManager, rootNode, space);
 	}
+	
 	/**
 	 * Eventually this should pick from a list and return the selected one.
 	 */

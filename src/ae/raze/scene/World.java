@@ -6,13 +6,9 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.light.AmbientLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
-import com.jme3.scene.shape.Box;
-import com.jme3.scene.shape.Dome;
-
-import ae.raze.scene.Track; 
+import com.jme3.scene.shape.Box; 
 
 /**
  * The floor of the racing track
@@ -51,22 +47,8 @@ public class World {
 		floorGeometry.addControl(new RigidBodyControl(0)); 
 		rootNode.attachChild(floorGeometry); 
 		space.add(floorGeometry); 
-
 		
-		// road cones
-		for (int i = 0; i < 12; i++) { 
-			Vector3f v3f = new Vector3f(0, 0, 0);
-			Dome dome = new Dome(v3f, 2, 4, .75f, true);
-			Geometry domeGeometry = new Geometry("Dome", dome); 
-			Material coneMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-			coneMaterial.setColor("Color", ColorRGBA.Orange);
-			domeGeometry.setMaterial(coneMaterial); 
-			domeGeometry.setLocalTranslation(i, 5, -3); 
-			// RigidBodyControl automatically uses box collision shapes when attached to single geometry with box mesh 
-			domeGeometry.addControl(new RigidBodyControl(2)); 
-			rootNode.attachChild(domeGeometry); 
-			space.add(domeGeometry); 
-		} 
+		Cones.addCones(rootNode, space, assetManager);
 		
 		//TODO - working here blender needs a UV map for my ogre export of the walls
 		new Track(assetManager, "Models/tracks/generic_walls.scene",rootNode, space);
