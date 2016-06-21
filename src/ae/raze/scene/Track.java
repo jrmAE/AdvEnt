@@ -40,7 +40,8 @@ public class Track {
 		trackSpatial = assetManager.loadModel(trackScene); 
 		trackNode = (Node)trackSpatial;
 		findGeom(trackSpatial);
-		trackNode.setLocalTranslation(-85, 0, 0);
+		trackNode.setLocalTranslation(-45, 0, 0);
+		trackGeo.scale(.7f);
 		trackGeo.addControl(new RigidBodyControl(0));
 		rootNode.attachChild(trackGeo); 
 		space.add(trackGeo); 

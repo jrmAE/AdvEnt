@@ -23,6 +23,12 @@ import com.jme3.scene.shape.Dome;
  */
 public class Cones {
 	
+	/**
+	 * This should transform into the 'level 1' track, just a square. 
+	 * @param rootNode
+	 * @param space
+	 * @param assetManager
+	 */
 	public static void addCones(Node rootNode, PhysicsSpace space, AssetManager assetManager) {
 		// road cones
 		for (int i = 0; i < 12; i++) { 
@@ -32,9 +38,9 @@ public class Cones {
 			Material coneMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 			coneMaterial.setColor("Color", ColorRGBA.Orange);
 			domeGeometry.setMaterial(coneMaterial); 
-			domeGeometry.setLocalTranslation(i, 5, -3); 
+			domeGeometry.setLocalTranslation(-45f+i, 1f, -3f); 
 			// RigidBodyControl automatically uses box collision shapes when attached to single geometry with box mesh 
-			domeGeometry.addControl(new RigidBodyControl(2)); 
+			domeGeometry.addControl(new RigidBodyControl(1)); 
 			rootNode.attachChild(domeGeometry); 
 			space.add(domeGeometry); 
 		} 
