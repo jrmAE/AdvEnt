@@ -72,6 +72,8 @@ public class RazeApplication extends SimpleApplication {
 
         setTopDown();
         World.createWorld(rootNode, assetManager, bulletAppState.getPhysicsSpace());
+        
+        //TODO reposition the car
         Car car = new Car(assetManager, inputManager, "Models/Ferrari/Car.scene");
         rootNode.attachChild(car.getCarNode());
         getPhysicsSpace().add(car.getPlayer());
