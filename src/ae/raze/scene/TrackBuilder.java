@@ -15,8 +15,9 @@ import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Dome;
 
+import ae.raze.util.ApplicationManager;
+
 /**
- * TODO this needs reorganized.... its no longer just road cones...
  * 
  * Provides common methods to generate a track for
  * the cars to follow
@@ -32,23 +33,29 @@ public class TrackBuilder {
 	 * @param space
 	 * @param assetManager
 	 */
-	public static void smallSquare(Node rootNode, PhysicsSpace space, AssetManager assetManager) {
+	public static void smallSquare() {
 
 		//North Wall
-		generateHorizWalls(35,-40,80,assetManager,rootNode,space);
+		generateHorizWalls(35,-40,80);
 
 		//South Wall
-		generateHorizWalls(-30,-40,80,assetManager,rootNode,space);
+		generateHorizWalls(-30,-40,80);
 
 		//West Wall
-		generateVertWalls(-30,-40,65,assetManager,rootNode,space);
+		generateVertWalls(-30,-40,65);
 
 		//East Wall
-		generateVertWalls(-30,40,65,assetManager,rootNode,space);
+		generateVertWalls(-30,40,65);
 
 	}
 	
-	private static void generateVertWalls(float x, float z, int countUntil, AssetManager assetManager, Node rootNode, PhysicsSpace space) {
+	private static void generateVertWalls(float x, float z, int countUntil) {
+		
+		AssetManager assetManager = ApplicationManager.INSTANCE.getAssetManager();
+		Node rootNode = ApplicationManager.INSTANCE.getRootNode();
+		PhysicsSpace space = ApplicationManager.INSTANCE.getSpace();
+		
+		
 		for (int i = 0; i < countUntil; i++) { 
 			Box box = new Box(1,1,1);
 			Geometry boxGeometry = new Geometry("Box", box); 
@@ -63,7 +70,11 @@ public class TrackBuilder {
 		} 
 	}
 	
-	private static void generateHorizWalls(float x, float z, int countUntil, AssetManager assetManager, Node rootNode, PhysicsSpace space) {
+	private static void generateHorizWalls(float x, float z, int countUntil) {
+		AssetManager assetManager = ApplicationManager.INSTANCE.getAssetManager();
+		Node rootNode = ApplicationManager.INSTANCE.getRootNode();
+		PhysicsSpace space = ApplicationManager.INSTANCE.getSpace();
+		
 		for (int i = 0; i < countUntil; i++) { 
 			Box box = new Box(1,1,1);
 			Geometry boxGeometry = new Geometry("Box", box); 

@@ -11,6 +11,8 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
+import ae.raze.util.ApplicationManager;
+
 /**
  * Everything you'll need for a track.
  * 
@@ -28,15 +30,18 @@ public class Track {
 	 * @param assetManager
 	 * @param trackScene - String. Such as "Models/tracks/generic_walls.scene"
 	 */
-	public Track(AssetManager assetManager, String trackScene, Node rootNode, PhysicsSpace space) {
+	public Track(String trackScene) {
 		this.trackScene = trackScene;
-		createTrack(assetManager, rootNode, space);
+		createTrack();
 	}
 	
 	/**
 	 * Eventually this should pick from a list and return the selected one.
 	 */
-	private void createTrack(AssetManager assetManager, Node rootNode, PhysicsSpace space) {
+	private void createTrack() {
+		AssetManager assetManager = ApplicationManager.INSTANCE.getAssetManager();
+		Node rootNode = ApplicationManager.INSTANCE.getRootNode();
+		PhysicsSpace space = ApplicationManager.INSTANCE.getSpace();
 		trackSpatial = assetManager.loadModel(trackScene); 
 		trackNode = (Node)trackSpatial;
 		findGeom(trackSpatial);

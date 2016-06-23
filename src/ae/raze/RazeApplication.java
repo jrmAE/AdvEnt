@@ -33,7 +33,6 @@ package ae.raze;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.bullet.PhysicsSpace;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Quaternion;
@@ -42,6 +41,7 @@ import com.jme3.shadow.BasicShadowRenderer;
 
 import ae.raze.model.Car;
 import ae.raze.scene.World;
+import ae.raze.util.ApplicationManager;
 
 /**
  * Have you played SuperSprint on NES? 
@@ -70,26 +70,20 @@ public class RazeApplication extends SimpleApplication {
             BasicShadowRenderer bsr = new BasicShadowRenderer(assetManager, 512);
             bsr.setDirection(new Vector3f(-0.5f, -0.3f, -0.3f).normalizeLocal());
         }
+        
+        ApplicationManager.INSTANCE.setAssetManager(assetManager);
+        ApplicationManager.INSTANCE.setRootNode(rootNode);
+        ApplicationManager.INSTANCE.setSpace(bulletAppState.getPhysicsSpace());
 
         setTopDown();
-        World.createWorld(rootNode, assetManager, bulletAppState.getPhysicsSpace());
+        World.createWorld();
         
-        //TODO reposition the car
-        Car player1 = new Car(assetManager, inputManager, "Models/Ferrari/Car.scene", true, 45);
-        rootNode.attachChild(player1.getCarNode());
-        getPhysicsSpace().add(player1.getPlayer());
-        
-        Car player2 = new Car(assetManager, inputManager, "Models/Ferrari/Car.scene", false, 40, ColorRGBA.Blue);
-        rootNode.attachChild(player2.getCarNode());
-        getPhysicsSpace().add(player2.getPlayer());
-        
-        Car player3 = new Car(assetManager, inputManager, "Models/Ferrari/Car.scene", false, 50, ColorRGBA.Yellow);
-        rootNode.attachChild(player3.getCarNode());
-        getPhysicsSpace().add(player3.getPlayer());
-        
-        Car player4 = new Car(assetManager, inputManager, "Models/Ferrari/Car.scene", false, 55, ColorRGBA.White);
-        rootNode.attachChild(player4.getCarNode());
-        getPhysicsSpace().add(player4.getPlayer());
+        //The Car Lineup 
+        //TODO factory-ize
+        Car player1 = new Car(inputManager, "Models/Ferrari/Car.scene", true, 45);
+        Car player2 = new Car(inputManager, "Models/Ferrari/Car.scene", false, 40, ColorRGBA.Blue);
+        Car player3 = new Car(inputManager, "Models/Ferrari/Car.scene", false, 50, ColorRGBA.Yellow);
+        Car player4 = new Car(inputManager, "Models/Ferrari/Car.scene", false, 55, ColorRGBA.White);
         
         DirectionalLight dl = new DirectionalLight();
         dl.setDirection(new Vector3f(-0.5f, -1f, -0.3f).normalizeLocal());
@@ -114,10 +108,6 @@ public class RazeApplication extends SimpleApplication {
         cam.setRotation(q);
     }
     
-    private PhysicsSpace getPhysicsSpace() {
-        return bulletAppState.getPhysicsSpace();
-    }
-
     @Override
     public void simpleUpdate(float tpf) {
     	//TODO a heads up display could be updated here

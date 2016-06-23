@@ -6,6 +6,7 @@ package ae.raze.model;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.bounding.BoundingBox;
+import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.VehicleControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
@@ -22,6 +23,7 @@ import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 
+import ae.raze.util.ApplicationManager;
 import ae.raze.util.GeometryBuilder;
 
 /**
@@ -43,8 +45,8 @@ public class Car implements ActionListener {
      * @param inputManager
      * @param carModel - String. For example: "Models/Ferrari/Car.scene"
      */
-    public Car(AssetManager assetMgr, InputManager inputManager, String carModel, boolean isPlayer, float startingLocation) {
-    	this(assetMgr, inputManager, carModel, isPlayer, startingLocation, ColorRGBA.Red);
+    public Car(InputManager inputManager, String carModel, boolean isPlayer, float startingLocation) {
+    	this(inputManager, carModel, isPlayer, startingLocation, ColorRGBA.Red);
     }
     
 	/**
@@ -52,11 +54,11 @@ public class Car implements ActionListener {
      * @param inputManager
      * @param carModel - String. For example: "Models/Ferrari/Car.scene"
      */
-    public Car(AssetManager assetMgr, InputManager inputManager, String carModel, boolean isPlayer, float startingLocation, ColorRGBA carColor) {
+    public Car(InputManager inputManager, String carModel, boolean isPlayer, float startingLocation, ColorRGBA carColor) {
     	this.carModel = carModel;
     	this.carColor = carColor;
     	this.isPlayer = isPlayer;
-    	buildCar(assetMgr, startingLocation);
+    	buildCar(startingLocation);
     	setupKeys(inputManager);
     }
 	
@@ -80,11 +82,14 @@ public class Car implements ActionListener {
      * we want to have a total of four cars race, so this needs to be 
      * built differently
      */
-    private void buildCar(AssetManager assetManager, float startingLocation) {
+    private void buildCar(float startingLocation) {
         float stiffness = 120.0f;//200=f1 car
         float compValue = 0.2f; //(lower than damp!)
         float dampValue = 0.3f;
         final float mass = 400;
+        AssetManager assetManager = ApplicationManager.INSTANCE.getAssetManager();
+        Node rootNode = ApplicationManager.INSTANCE.getRootNode();
+        PhysicsSpace space = ApplicationManager.INSTANCE.getSpace();
 
         //Load model and get chassis Geometry
         carNode = (Node)assetManager.loadModel(carModel);
@@ -146,6 +151,9 @@ public class Car implements ActionListener {
 
         player.getWheel(2).setFrictionSlip(4);
         player.getWheel(3).setFrictionSlip(4);
+        
+        rootNode.attachChild(getCarNode());
+        space.add(getPlayer());
 
     }
 
