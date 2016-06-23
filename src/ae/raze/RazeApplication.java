@@ -35,6 +35,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.light.DirectionalLight;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.shadow.BasicShadowRenderer;
@@ -74,9 +75,21 @@ public class RazeApplication extends SimpleApplication {
         World.createWorld(rootNode, assetManager, bulletAppState.getPhysicsSpace());
         
         //TODO reposition the car
-        Car car = new Car(assetManager, inputManager, "Models/Ferrari/Car.scene");
-        rootNode.attachChild(car.getCarNode());
-        getPhysicsSpace().add(car.getPlayer());
+        Car player1 = new Car(assetManager, inputManager, "Models/Ferrari/Car.scene", true, 45);
+        rootNode.attachChild(player1.getCarNode());
+        getPhysicsSpace().add(player1.getPlayer());
+        
+        Car player2 = new Car(assetManager, inputManager, "Models/Ferrari/Car.scene", false, 40, ColorRGBA.Blue);
+        rootNode.attachChild(player2.getCarNode());
+        getPhysicsSpace().add(player2.getPlayer());
+        
+        Car player3 = new Car(assetManager, inputManager, "Models/Ferrari/Car.scene", false, 50, ColorRGBA.Yellow);
+        rootNode.attachChild(player3.getCarNode());
+        getPhysicsSpace().add(player3.getPlayer());
+        
+        Car player4 = new Car(assetManager, inputManager, "Models/Ferrari/Car.scene", false, 55, ColorRGBA.White);
+        rootNode.attachChild(player4.getCarNode());
+        getPhysicsSpace().add(player4.getPlayer());
         
         DirectionalLight dl = new DirectionalLight();
         dl.setDirection(new Vector3f(-0.5f, -1f, -0.3f).normalizeLocal());

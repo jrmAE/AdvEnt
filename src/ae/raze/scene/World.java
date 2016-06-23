@@ -48,7 +48,7 @@ public class World {
 		rootNode.attachChild(floorGeometry); 
 		space.add(floorGeometry); 
 		
-		TrackBuilder.addCones(rootNode, space, assetManager);
+		TrackBuilder.smallSquare(rootNode, space, assetManager);
 		
 		//TODO - working here blender needs a UV map for my ogre export of the walls
 		new Track(assetManager, "Models/tracks/generic_walls.scene",rootNode, space);

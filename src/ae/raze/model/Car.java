@@ -13,6 +13,8 @@ import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Matrix3f;
 import com.jme3.math.Vector3f;
@@ -33,15 +35,28 @@ public class Car implements ActionListener {
     private float accelerationValue = 0;
     private Node carNode;
     private String carModel = null;
+    private ColorRGBA carColor = ColorRGBA.Red;
+    private boolean isPlayer = true;
     
-    /**
+	/**
      * @param assetMgr
      * @param inputManager
      * @param carModel - String. For example: "Models/Ferrari/Car.scene"
      */
-    public Car(AssetManager assetMgr, InputManager inputManager, String carModel) {
+    public Car(AssetManager assetMgr, InputManager inputManager, String carModel, boolean isPlayer, float startingLocation) {
+    	this(assetMgr, inputManager, carModel, isPlayer, startingLocation, ColorRGBA.Red);
+    }
+    
+	/**
+     * @param assetMgr
+     * @param inputManager
+     * @param carModel - String. For example: "Models/Ferrari/Car.scene"
+     */
+    public Car(AssetManager assetMgr, InputManager inputManager, String carModel, boolean isPlayer, float startingLocation, ColorRGBA carColor) {
     	this.carModel = carModel;
-    	buildCar(assetMgr);
+    	this.carColor = carColor;
+    	this.isPlayer = isPlayer;
+    	buildCar(assetMgr, startingLocation);
     	setupKeys(inputManager);
     }
 	
@@ -65,7 +80,7 @@ public class Car implements ActionListener {
      * we want to have a total of four cars race, so this needs to be 
      * built differently
      */
-    private void buildCar(AssetManager assetManager) {
+    private void buildCar(AssetManager assetManager, float startingLocation) {
         float stiffness = 120.0f;//200=f1 car
         float compValue = 0.2f; //(lower than damp!)
         float dampValue = 0.3f;
@@ -73,7 +88,14 @@ public class Car implements ActionListener {
 
         //Load model and get chassis Geometry
         carNode = (Node)assetManager.loadModel(carModel);
+        carNode.setLocalTranslation(startingLocation, 0, 0);
         carNode.setShadowMode(ShadowMode.Cast);
+        
+        Material material = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+//	    material.setTexture("ColorMap", assetManager.loadTexture("Textures/concrete_cracked.jpg")); 
+        material.setColor("Color", carColor);
+        carNode.setMaterial(material);
+        
         Geometry chassis = GeometryBuilder.findGeom(carNode, "Car");
         BoundingBox box = (BoundingBox) chassis.getModelBound();
 
@@ -141,6 +163,7 @@ public class Car implements ActionListener {
 	public Node getCarNode() {
 		return carNode;
 	}
+	
 
 	/**
      * TODO
@@ -148,6 +171,11 @@ public class Car implements ActionListener {
      * @see com.jme3.input.controls.ActionListener#onAction(java.lang.String, boolean, float)
      */
     public void onAction(String binding, boolean keyPressed, float tpf) {
+    	
+    	if (!isPlayer) {
+    		return;
+    	}
+    	
         if (binding.equals("Lefts")) {
             if (keyPressed) {
                 steeringValue += .5f;

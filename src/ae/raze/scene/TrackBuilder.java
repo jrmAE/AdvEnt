@@ -32,7 +32,7 @@ public class TrackBuilder {
 	 * @param space
 	 * @param assetManager
 	 */
-	public static void addCones(Node rootNode, PhysicsSpace space, AssetManager assetManager) {
+	public static void smallSquare(Node rootNode, PhysicsSpace space, AssetManager assetManager) {
 
 		//North Wall
 		generateHorizWalls(35,-40,80,assetManager,rootNode,space);
