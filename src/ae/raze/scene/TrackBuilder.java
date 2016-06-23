@@ -24,7 +24,7 @@ import com.jme3.scene.shape.Dome;
  * @author meyer
  *
  */
-public class Cones {
+public class TrackBuilder {
 	
 	/**
 	 * This should transform into the 'level 1' track, just a square. 
