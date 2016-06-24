@@ -23,6 +23,7 @@ import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 
+import ae.raze.ai.Behavior;
 import ae.raze.util.ApplicationManager;
 import ae.raze.util.GeometryBuilder;
 
@@ -78,7 +79,7 @@ public class Car implements ActionListener {
     }
     
     /**
-     * TODO
+     * TODO clean this up - too big
      * we want to have a total of four cars race, so this needs to be 
      * built differently
      */
@@ -172,13 +173,28 @@ public class Car implements ActionListener {
 		return carNode;
 	}
 	
-
+	/**
+	 * @return Vector3f. The current location of the car. 
+	 */
+	public Vector3f currentLocation() {
+		return carNode.getLocalTranslation();
+	}
+	
+	public Vector3f currentDirection() {
+		Vector3f vector = new Vector3f();
+    	player.getForwardVector(vector);
+    	return vector;
+	}
+	
 	/**
      * TODO
      * make this appear quicker in the camera
      * @see com.jme3.input.controls.ActionListener#onAction(java.lang.String, boolean, float)
      */
     public void onAction(String binding, boolean keyPressed, float tpf) {
+    	
+    	Behavior b = new Behavior(this);
+    	b.doStuff();
     	
     	if (!isPlayer) {
     		return;

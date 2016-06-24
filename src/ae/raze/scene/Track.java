@@ -50,6 +50,7 @@ public class Track {
 		trackGeo.addControl(new RigidBodyControl(0));
 		rootNode.attachChild(trackGeo); 
 		space.add(trackGeo); 
+		ApplicationManager.INSTANCE.setOuterWall(trackNode.getWorldBound());
 	}
 	
 	/**
