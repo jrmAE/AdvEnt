@@ -33,13 +33,10 @@ package ae.raze;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.light.DirectionalLight;
-import com.jme3.math.ColorRGBA;
-import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.shadow.BasicShadowRenderer;
 
-import ae.raze.model.Car;
+import ae.raze.scene.CameraView;
 import ae.raze.scene.World;
 import ae.raze.util.ApplicationManager;
 
@@ -50,8 +47,6 @@ import ae.raze.util.ApplicationManager;
  *
  */
 public class RazeApplication extends SimpleApplication {
-
-    private BulletAppState bulletAppState;
 
     /**
      * Where the magic happens
@@ -64,7 +59,7 @@ public class RazeApplication extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        bulletAppState = new BulletAppState();
+    	BulletAppState bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
         if (settings.getRenderer().startsWith("LWJGL")) {
             BasicShadowRenderer bsr = new BasicShadowRenderer(assetManager, 512);
@@ -75,37 +70,11 @@ public class RazeApplication extends SimpleApplication {
         ApplicationManager.INSTANCE.setRootNode(rootNode);
         ApplicationManager.INSTANCE.setSpace(bulletAppState.getPhysicsSpace());
 
-        setTopDown();
+        //Add the Stuff
+        CameraView.setTopDownView(cam);
         World.createWorld();
-        
-        //The Car Lineup 
-        //TODO factory-ize
-        Car player1 = new Car(inputManager, "Models/Ferrari/Car.scene", true, 45);
-        Car player2 = new Car(inputManager, "Models/Ferrari/Car.scene", false, 40, ColorRGBA.Blue);
-        Car player3 = new Car(inputManager, "Models/Ferrari/Car.scene", false, 50, ColorRGBA.Yellow);
-        Car player4 = new Car(inputManager, "Models/Ferrari/Car.scene", false, 55, ColorRGBA.White);
-        
-        DirectionalLight dl = new DirectionalLight();
-        dl.setDirection(new Vector3f(-0.5f, -1f, -0.3f).normalizeLocal());
-        rootNode.addLight(dl);
+        World.addCars(true, 3, inputManager);
 
-        dl = new DirectionalLight();
-        dl.setDirection(new Vector3f(0.5f, -0.1f, 0.3f).normalizeLocal());
-    }
-
-    /**
-     * Sets the camera to be a top down view.
-     */
-    private void setTopDown() {
-        Vector3f left = new Vector3f(0,0,0);
-        Vector3f up = new Vector3f(0,0,50);
-        Vector3f direction = new Vector3f(0,0,45);
-        Vector3f height = new Vector3f(0,150, 0);
-        cam.setAxes(left, up, direction);
-        cam.setLocation(height);
-        //This quaternion rotates the camera 90* from default
-        Quaternion q = new Quaternion(.5f, .5f, -.5f, .5f);
-        cam.setRotation(q);
     }
     
     @Override

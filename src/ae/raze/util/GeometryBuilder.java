@@ -9,16 +9,17 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
 /**
+ * This was provided by the sample. It will pull a geometry from a given
+ * spatial imported from an Ogre 3d file (Blender. 
  * @author meyer
  */
 public class GeometryBuilder {
 	
     /**
-     * Seems to search the .scene file for a spatial with the given name
-     * TODO need to learn more about this
+     * Search the .scene file for a spatial with the given name
      * @param spatial
      * @param name
-     * @return
+     * @return Geometry
      */
     public static Geometry findGeom(Spatial spatial, String name) {
         if (spatial instanceof Node) {

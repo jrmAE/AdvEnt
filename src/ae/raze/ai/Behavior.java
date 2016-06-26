@@ -4,14 +4,12 @@
  */
 package ae.raze.ai;
 
-import com.jme3.bounding.BoundingVolume;
 import com.jme3.collision.CollisionResults;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 
 import ae.raze.model.Car;
-import ae.raze.util.ApplicationManager;
 
 /**
  * TODO beginning work for the AI for the CPU cars
@@ -21,13 +19,27 @@ import ae.raze.util.ApplicationManager;
  */
 public class Behavior {
 	
-	Car computerCar;
+	private Car computerCar;
+	private Personality personality;
 	
-	public Behavior(Car car) {
+	/**
+	 * Default Constructor for the Main AI.
+	 * We need a Car to apply the AI to and a style of AI that the car
+	 * will follow. 
+	 * 
+	 * @param car - Car.
+	 * @param personality - Personality.
+	 */
+	public Behavior(Car car, Personality personality) {
 		computerCar = car;
+		this.personality = personality;
 	}
 	
-	public void doStuff() {
+	public Personality getPersonality() {
+		return personality;
+	}
+	
+	private void findDirection() {
 		
 		Vector3f currentLocation = computerCar.currentLocation();
 		
@@ -75,11 +87,8 @@ public class Behavior {
 			Geometry boxGeometry = new Geometry("Box", box); 
 			boxGeometry.setLocalTranslation(currentLocation.x-i, currentLocation.y, currentLocation.z); 
 //			boolean collideWith = false;
-			BoundingVolume outerWalls = ApplicationManager.INSTANCE.getOuterWall();
-			int result = boxGeometry.collideWith(outerWalls, results);
-			
-//			System.out.println("Checking result: " + result);
-			System.out.println("RESULTS: " + results.toString());
+//			BoundingVolume outerWalls = ApplicationManager.INSTANCE.getOuterWall();
+//			int result = boxGeometry.collideWith(outerWalls, results);
 			
 		}
 		

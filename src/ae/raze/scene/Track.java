@@ -14,7 +14,11 @@ import com.jme3.scene.Spatial;
 import ae.raze.util.ApplicationManager;
 
 /**
- * Everything you'll need for a track.
+ * This is track wall based on a 3d model exported from Blender. 
+ * This should be expande further. For now... it'll be ignored
+ * 
+ * When called, this can be instantiated as the following:
+ * new Track("Models/tracks/generic_walls.scene");	
  * 
  * @author meyer
  */
@@ -50,7 +54,6 @@ public class Track {
 		trackGeo.addControl(new RigidBodyControl(0));
 		rootNode.attachChild(trackGeo); 
 		space.add(trackGeo); 
-		ApplicationManager.INSTANCE.setOuterWall(trackNode.getWorldBound());
 	}
 	
 	/**

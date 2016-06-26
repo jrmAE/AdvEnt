@@ -24,6 +24,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 
 import ae.raze.ai.Behavior;
+import ae.raze.ai.Personality;
 import ae.raze.util.ApplicationManager;
 import ae.raze.util.GeometryBuilder;
 
@@ -33,7 +34,7 @@ import ae.raze.util.GeometryBuilder;
 public class Car implements ActionListener {
 	
     private VehicleControl player;
-    private float wheelRadius;
+    private Behavior behavior;
     private float steeringValue = 0;
     private float accelerationValue = 0;
     private Node carNode;
@@ -79,15 +80,17 @@ public class Car implements ActionListener {
     }
     
     /**
-     * TODO clean this up - too big
-     * we want to have a total of four cars race, so this needs to be 
-     * built differently
+     * This is provided by the sample. It reads the Blender-generated
+     * Ogre 3d scene file and constructs it into a 3d object. 
+     * 
+     * @param startingLocation - Where the car should be placed at the start.
      */
     private void buildCar(float startingLocation) {
         float stiffness = 120.0f;//200=f1 car
         float compValue = 0.2f; //(lower than damp!)
         float dampValue = 0.3f;
         final float mass = 400;
+        float wheelRadius = 0f;
         AssetManager assetManager = ApplicationManager.INSTANCE.getAssetManager();
         Node rootNode = ApplicationManager.INSTANCE.getRootNode();
         PhysicsSpace space = ApplicationManager.INSTANCE.getSpace();
@@ -158,6 +161,13 @@ public class Car implements ActionListener {
 
     }
 
+    public void setBehavior(Personality personality) {
+    	this.behavior = new Behavior(this, personality);
+    }
+    
+    public Behavior getBehavior() {
+    	return this.behavior;
+    }
     
     /**
 	 * @return the player
@@ -187,14 +197,11 @@ public class Car implements ActionListener {
 	}
 	
 	/**
-     * TODO
-     * make this appear quicker in the camera
+     * Listens to the keyboard and makes the cars do stuff
+     * 
      * @see com.jme3.input.controls.ActionListener#onAction(java.lang.String, boolean, float)
      */
     public void onAction(String binding, boolean keyPressed, float tpf) {
-    	
-    	Behavior b = new Behavior(this);
-    	b.doStuff();
     	
     	if (!isPlayer) {
     		return;

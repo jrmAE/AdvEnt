@@ -49,6 +49,28 @@ public class TrackBuilder {
 
 	}
 	
+	/**
+	 * This should transform into the 'level 1' track, just a square. 
+	 * @param rootNode
+	 * @param space
+	 * @param assetManager
+	 */
+	public static void largeSquare() {
+
+		//North Wall
+		generateHorizWalls(60,-80,160);
+
+		//South Wall
+		generateHorizWalls(-50,-80,160);
+
+		//West Wall
+		generateVertWalls(-50,-80,110);
+
+		//East Wall
+		generateVertWalls(-50,80,110);
+
+	}
+	
 	private static void generateVertWalls(float x, float z, int countUntil) {
 		
 		AssetManager assetManager = ApplicationManager.INSTANCE.getAssetManager();
