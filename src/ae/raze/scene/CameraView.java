@@ -9,8 +9,9 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 
 /**
+ * This should be used to generate and set different camera angles. 
+ * 
  * @author meyer
- *
  */
 public class CameraView {
 	

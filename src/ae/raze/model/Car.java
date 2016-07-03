@@ -29,6 +29,8 @@ import ae.raze.util.ApplicationManager;
 import ae.raze.util.GeometryBuilder;
 
 /**
+ * TODO This class has gotten too big
+ * 
  * @author meyer
  */
 public class Car implements ActionListener {
@@ -60,6 +62,9 @@ public class Car implements ActionListener {
     	this.carModel = carModel;
     	this.carColor = carColor;
     	this.isPlayer = isPlayer;
+    	if (!isPlayer) {
+    		behavior = new Behavior(this, Personality.PASSIVE);
+    	}
     	buildCar(startingLocation);
     	setupKeys(inputManager);
     }
@@ -255,4 +260,5 @@ public class Car implements ActionListener {
             }
         }
     }
+    
 }

@@ -36,7 +36,9 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.math.Vector3f;
 import com.jme3.shadow.BasicShadowRenderer;
 
+import ae.raze.model.CarRoster;
 import ae.raze.scene.CameraView;
+import ae.raze.scene.Track;
 import ae.raze.scene.World;
 import ae.raze.util.ApplicationManager;
 
@@ -69,12 +71,10 @@ public class RazeApplication extends SimpleApplication {
         ApplicationManager.INSTANCE.setAssetManager(assetManager);
         ApplicationManager.INSTANCE.setRootNode(rootNode);
         ApplicationManager.INSTANCE.setSpace(bulletAppState.getPhysicsSpace());
-
-        //Add the Stuff
-        CameraView.setTopDownView(cam);
-        World.createWorld();
-        World.addCars(true, 3, inputManager);
-
+        ApplicationManager.INSTANCE.setWorld(new World());
+        ApplicationManager.INSTANCE.setTrack(new Track());
+        ApplicationManager.INSTANCE.setCamera(cam);
+        ApplicationManager.INSTANCE.setCarRoster(CarRoster.addCars(true, 3, inputManager));
     }
     
     @Override
