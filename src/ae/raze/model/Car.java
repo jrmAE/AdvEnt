@@ -12,12 +12,10 @@ import com.jme3.bullet.control.VehicleControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
-import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
-import com.jme3.math.Matrix3f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Geometry;
@@ -33,8 +31,9 @@ import ae.raze.util.GeometryBuilder;
  * 
  * @author meyer
  */
-public class Car implements ActionListener {
+public class Car {
 	
+	private CarListener listener;
     private VehicleControl player;
     private Behavior behavior;
     private float steeringValue = 0;
@@ -70,18 +69,19 @@ public class Car implements ActionListener {
     }
 	
     private void setupKeys(InputManager inputManager) {
+    	listener = new CarListener(this);
         inputManager.addMapping("Lefts", new KeyTrigger(KeyInput.KEY_H));
         inputManager.addMapping("Rights", new KeyTrigger(KeyInput.KEY_K));
         inputManager.addMapping("Ups", new KeyTrigger(KeyInput.KEY_U));
         inputManager.addMapping("Downs", new KeyTrigger(KeyInput.KEY_J));
         inputManager.addMapping("Space", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping("Reset", new KeyTrigger(KeyInput.KEY_RETURN));
-        inputManager.addListener(this, "Lefts");
-        inputManager.addListener(this, "Rights");
-        inputManager.addListener(this, "Ups");
-        inputManager.addListener(this, "Downs");
-        inputManager.addListener(this, "Space");
-        inputManager.addListener(this, "Reset");
+        inputManager.addListener(listener, "Lefts");
+        inputManager.addListener(listener, "Rights");
+        inputManager.addListener(listener, "Ups");
+        inputManager.addListener(listener, "Downs");
+        inputManager.addListener(listener, "Space");
+        inputManager.addListener(listener, "Reset");
     }
     
     /**
@@ -200,65 +200,27 @@ public class Car implements ActionListener {
     	player.getForwardVector(vector);
     	return vector;
 	}
-	
+
 	/**
-     * Listens to the keyboard and makes the cars do stuff
-     * 
-     * @see com.jme3.input.controls.ActionListener#onAction(java.lang.String, boolean, float)
-     */
-    public void onAction(String binding, boolean keyPressed, float tpf) {
-    	
-    	if (!isPlayer) {
-    		return;
-    	}
-    	
-        if (binding.equals("Lefts")) {
-            if (keyPressed) {
-                steeringValue += .5f;
-            } else {
-                steeringValue += -.5f;
-            }
-            player.steer(steeringValue);
-        } else if (binding.equals("Rights")) {
-            if (keyPressed) {
-                steeringValue += -.5f;
-            } else {
-                steeringValue += .5f;
-            }
-            player.steer(steeringValue);
-        } //note that our fancy car actually goes backwards..
-        else if (binding.equals("Ups")) {
-            if (keyPressed) {
-                accelerationValue -= 800;
-            } else {
-                accelerationValue += 800;
-            }
-            player.accelerate(accelerationValue);
-            player.setCollisionShape(CollisionShapeFactory.createDynamicMeshShape(GeometryBuilder.findGeom(carNode, "Car")));
-        } else if (binding.equals("Downs")) {
-            if (keyPressed) {
-                if (Math.abs(player.getCurrentVehicleSpeedKmHour()) < 1.0f) {
-                	//reverse!
-                	player.accelerate(800f);
-                } else {
-                	player.brake(40f);
-                }
-                
-            } else {
-            	//don't brake and don't increase the speed of reversing
-            	player.accelerate(0f);
-            	player.brake(0f);
-            }
-        } else if (binding.equals("Reset")) {
-            if (keyPressed) {
-                player.setPhysicsLocation(Vector3f.ZERO);
-                player.setPhysicsRotation(new Matrix3f());
-                player.setLinearVelocity(Vector3f.ZERO);
-                player.setAngularVelocity(Vector3f.ZERO);
-                player.resetSuspension();
-            } else {
-            }
-        }
-    }
-    
+	 * @return the isPlayer
+	 */
+	public boolean isPlayer() {
+		return isPlayer;
+	}
+
+	/**
+	 * @return the steeringValue
+	 */
+	public void addSteeringValue(float value) {
+		steeringValue += value;
+		player.steer(steeringValue);
+	}
+
+	/**
+	 * @return the accelerationValue
+	 */
+	public void addAccelerationValue(float value) {
+		accelerationValue += value;
+		player.accelerate(accelerationValue);
+	}
 }
